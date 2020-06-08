@@ -82,16 +82,67 @@ Just bind the jitsi option object to the `options` property.
 
 # Events
 
-To create an event, you must specify a `ref` in the component. This `ref` is required to access the methods in the JitMeet component.
+**Methods**
+
+> `addEventListener(eventName, handler)`
+
+To create an event, you must specify a `ref` in the JitsiMeet component. This `ref` is required to access the methods in the JitMeet component.
 
 ```html
-<vue-jitsi-meet ref="jitsiRef"/>
+<vue-jitsi-meet ref="jitsiRef" :options="jitsiOptions"/>
 ```
 
 ```javascript
-
+...
+computed: {
+  jitsiOptions () {
+    return {
+      ...
+      onload: this.onIFrameLoad
+    };
+  },
+},
+methods: {
+  // Setup events after the IFrame onload event
+  onIFrameLoad () {
+    this.$refs.jitsiRef.addEventListener('participantJoined', this.onParticipantJoined);
+  },
+  onParticipantJoined (e) {
+    // do stuff
+  },
+}
+...
 ```
 
-
-
 # Execute Command
+
+**Methods**
+
+> `executeCommand(commandName, arg1, arg2, ...args)`
+
+Control the embedded JitsiMeet conference using the `executeCommand` method. Similar to the [events](#events), this can also be achieved using `ref`.
+
+```html
+<vue-jitsi-meet ref="jitsiRef" :options="jitsiOptions"/>
+```
+
+```javascript
+...
+computed: {
+  jitsiOptions () {
+    return {
+      ...
+      onload: this.onIFrameLoad
+    };
+  },
+},
+methods: {
+  // Execute commands after the IFrame onload event
+  // or at any given action by the user.
+  onIFrameLoad () {
+    // This will load the 'The display name' value using the `displayName` command.
+    this.$refs.jitsiRef.executeCommand('displayName', 'The display name');
+  },
+}
+...
+```
