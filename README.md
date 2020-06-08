@@ -1,4 +1,4 @@
-# vue-jitsi-meet
+# vue-jitsi-meet ![Deploy](https://github.com/mycurelabs/vue-jitsi-meet/workflows/Deploy/badge.svg)
 
 Vue component for Jitsi Meet Web Integration via IFrame.
 
