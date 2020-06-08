@@ -1,0 +1,38 @@
+name: Deploy
+
+on: 
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-test-publish:
+    name: Build, Test, and Publish to NPM
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    steps: 
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: https://registry.npmjs.org/
+      - name: Install yarn
+        run: npm install yarn@latest -g
+      - name: Install dependencies
+        run: yarn
+      - name: Run lint, and build
+        run: |
+          yarn lint
+          yarn build
+      - name: Ensure package-lock.json
+        run: |
+          rm -rf node_modules
+          npm install
+      - name: Publish
+        run: |
+          npm ci
+          npm publish --access=public
+        env:  
+          NODE_AUTH_TOKEN: ${{secrets.ORG_NPM_AUTH_TOKEN}}
