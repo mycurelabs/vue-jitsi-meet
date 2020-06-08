@@ -13,6 +13,14 @@ $ yarn add @mycure/vue-jitsi-meet
 ```bash
 $ npm install @mycure/vue-jitsi-meet
 ```
+
+# Props
+
+| Prop | Type | Description |
+| ---- | ---- | ----------- |
+| domain | String | The jitsi server domain |
+| options | Object | Jitsi [Options] (https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe#api--new-jitsimeetexternalapidomain-options) |
+
 # Usage
 
 ```vue
@@ -59,3 +67,31 @@ export default {
 };
 </script>
 ```
+
+# Domain, and Options
+
+This plugin supports all options available in the [Jitsi IFrame API Documentation](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe#api--new-jitsimeetexternalapidomain-options).
+
+**Usage**
+
+Just bind the jitsi option object to the `options` property.
+
+```html
+<vue-jitsi-meet domain="meet.jit.si" :options="options"/>
+```
+
+# Events
+
+To create an event, you must specify a `ref` in the component. This `ref` is required to access the methods in the JitMeet component.
+
+```html
+<vue-jitsi-meet ref="jitsiRef"/>
+```
+
+```javascript
+
+```
+
+
+
+# Execute Command
