@@ -1,6 +1,6 @@
 {
   "name": "@mycure/vue-jitsi-meet",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Vue component for Jitsi Meet Web Integration via IFrame",
   "main": "dist/index.js",
   "scripts": {
