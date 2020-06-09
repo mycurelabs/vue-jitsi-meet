@@ -10,7 +10,7 @@ export default {
       default: 'meet.jit.si'
     },
     options: {
-      type: String,
+      type: Object,
       default: () => ({}),
     },
   },
