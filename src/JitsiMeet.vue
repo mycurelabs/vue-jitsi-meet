@@ -15,7 +15,7 @@ export default {
     },
   },
   mounted () {
-    this.loadScript('https://meet.jit.si/external_api.js', () => {
+    this.loadScript('https://' + this.domain + '/external_api.js', () => {
       if (!window.JitsiMeetExternalAPI) throw new Error('Jitsi Meet API not loaded');
       this.embedJitsiWidget();
     });
