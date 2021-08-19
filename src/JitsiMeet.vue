@@ -1,5 +1,5 @@
 <template>
-  <div ref="jitsiContainer" style="height: 100%; width: 100%;"></div>
+  <div ref="jitsiContainer" style="height: 100%; width: 100%"></div>
 </template>
 
 <script>
@@ -7,47 +7,52 @@ export default {
   props: {
     domain: {
       type: String,
-      default: 'meet.jit.si'
+      default: "meet.jit.si",
+    },
+    externalApiUrl: {
+      type: String,
+      default: "https://meet.jit.si/external_api.js",
     },
     options: {
       type: Object,
       default: () => ({}),
     },
   },
-  mounted () {
-    this.loadScript('https://meet.jit.si/external_api.js', () => {
-      if (!window.JitsiMeetExternalAPI) throw new Error('Jitsi Meet API not loaded');
+  mounted() {
+    this.loadScript(this.externalApiUrl, () => {
+      if (!window.JitsiMeetExternalAPI)
+        throw new Error("Jitsi Meet API not loaded");
       this.embedJitsiWidget();
     });
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.removeJitsiWidget();
   },
   methods: {
-    loadScript (src, cb) {
-      const scriptEl = document.createElement('script');
+    loadScript(src, cb) {
+      const scriptEl = document.createElement("script");
       scriptEl.src = src;
       scriptEl.async = 1;
-      document.querySelector('head').appendChild(scriptEl);
-      scriptEl.addEventListener('load', cb);
+      document.querySelector("head").appendChild(scriptEl);
+      scriptEl.addEventListener("load", cb);
     },
-    embedJitsiWidget () {
+    embedJitsiWidget() {
       const options = {
         ...this.options,
         parentNode: this.$refs.jitsiContainer,
       };
       this.jitsiApi = new window.JitsiMeetExternalAPI(this.domain, options);
     },
-    executeCommand (command, ...value) {
+    executeCommand(command, ...value) {
       this.jitsiApi.executeCommand(command, ...value);
     },
-    addEventListener (event, fn) {
+    addEventListener(event, fn) {
       this.jitsiApi.on(event, fn);
     },
     // Misc
-    removeJitsiWidget () {
+    removeJitsiWidget() {
       if (this.jitsiApi) this.jitsiApi.dispose();
     },
-  }
+  },
 };
 </script>
