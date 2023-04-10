@@ -14,9 +14,14 @@ export default {
       default: () => ({}),
     },
   },
+  data () {
+    return {
+      jitsiApi: null,
+    };
+  },
   mounted () {
-    this.loadScript('https://meet.jit.si/external_api.js', () => {
-      if (!window.JitsiMeetExternalAPI) throw new Error('Jitsi Meet API not loaded');
+    this.loadScript(`https://${this.domain}/external_api.js`, () => {
+      if (!window.JitsiMeetExternalAPI) throw new Error('Jitsi Meet External API not loaded');
       this.embedJitsiWidget();
     });
   },
